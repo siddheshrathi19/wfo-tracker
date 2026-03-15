@@ -5,15 +5,13 @@
 <title>WFO Tracker</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏢</text></svg>">
-
 <style>
 
 body{
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
 background:#f6f7fb;
 margin:0;
-padding:10px;
+padding:16px;
 }
 
 .container{
@@ -21,161 +19,92 @@ max-width:420px;
 margin:auto;
 background:white;
 border-radius:14px;
-padding:12px;
+padding:16px;
 box-shadow:0 4px 18px rgba(0,0,0,0.08);
 }
 
-.topBar{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:4px;
-}
-
 .title{
-font-size:18px;
+font-size:20px;
 font-weight:700;
-}
-
-.export{
-font-size:12px;
-cursor:pointer;
-background:#eef2ff;
-padding:4px 8px;
-border-radius:6px;
+margin-bottom:10px;
+text-align:center;
 }
 
 .header{
 display:flex;
 justify-content:space-between;
 align-items:center;
-font-size:16px;
 font-weight:600;
-margin-bottom:6px;
+margin-bottom:12px;
 }
-
-.nav{
-cursor:pointer;
-padding:4px 8px;
-border-radius:6px;
-}
-
-.nav:hover{background:#eef2f7;}
 
 .metrics{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:5px;
-margin-bottom:5px;
+gap:10px;
+margin-bottom:16px;
 }
 
 .metric{
-display:flex;
-align-items:center;
-justify-content:center;
-gap:4px;
-font-size:11px;
-border-radius:6px;
-padding:5px;
+background:#f3f4f6;
+border-radius:10px;
+padding:10px;
+text-align:center;
+font-size:12px;
 }
 
 .metric span{
+font-size:18px;
 font-weight:700;
-font-size:13px;
+display:block;
 }
-
-.work{background:#e0f2fe;}
-.leave{background:#fef3c7;}
-.eff{background:#e5e7eb;}
-.req{background:#dcfce7;}
 
 .progressWrap{
 text-align:center;
-margin-bottom:4px;
-}
-
-.big{
-font-size:18px;
-font-weight:700;
-color:#16a34a;
+margin-bottom:16px;
 }
 
 .progress{
-height:5px;
+height:8px;
 background:#e5e7eb;
-border-radius:5px;
+border-radius:10px;
 overflow:hidden;
-margin:3px 0;
+margin:6px 0;
 }
 
 .bar{
-height:5px;
+height:8px;
 background:#16a34a;
 width:0%;
-transition:width .4s ease;
+transition:width .4s;
 }
 
-.infoRow{
-display:flex;
-justify-content:space-between;
-font-size:10px;
+.info{
+font-size:12px;
 color:#6b7280;
+margin-top:6px;
 }
 
-.status{font-weight:600;}
-
-.good{color:#16a34a}
-.warn{color:#f59e0b}
-.bad{color:#ef4444}
-
-.selectedInfo{
+.legend{
+font-size:11px;
 text-align:center;
-font-size:10px;
+margin-bottom:8px;
 color:#6b7280;
-margin-bottom:4px;
 }
 
 .actions{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:4px;
-margin-bottom:6px;
+gap:8px;
+margin-bottom:14px;
 }
 
 button{
 border:none;
-padding:6px;
-border-radius:6px;
-font-size:11px;
+padding:10px;
+border-radius:8px;
+font-size:13px;
 cursor:pointer;
-display:flex;
-align-items:center;
-justify-content:center;
-gap:3px;
-position:relative;
-overflow:hidden;
-}
-
-/* Ripple animation */
-
-button:after{
-content:'';
-position:absolute;
-background:rgba(255,255,255,0.4);
-width:100px;
-height:100px;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%) scale(0);
-border-radius:50%;
-opacity:0;
-transition:.4s;
-}
-
-button:active:after{
-transform:translate(-50%,-50%) scale(2);
-opacity:1;
-transition:0s;
 }
 
 .today{background:#6366f1;color:white}
@@ -186,27 +115,25 @@ transition:0s;
 .calendar{
 display:grid;
 grid-template-columns:repeat(7,1fr);
-gap:3px;
-font-size:10px;
+gap:6px;
+font-size:12px;
 }
 
 .dayHead{
 text-align:center;
-color:#6b7280;
 font-weight:600;
+color:#6b7280;
 }
 
 .day{
-height:24px;
+height:32px;
 display:flex;
 align-items:center;
 justify-content:center;
-border-radius:5px;
+border-radius:6px;
 background:#f3f4f6;
 cursor:pointer;
 }
-
-.day:hover{transform:scale(1.05)}
 
 .wfoDay{background:#16a34a;color:white}
 .leaveDay{background:#f59e0b;color:white}
@@ -216,12 +143,20 @@ background:#fee2e2;
 color:#b91c1c;
 }
 
-.selected{
-outline:2px solid #6366f1;
-}
-
 .todayBorder{
 border:2px solid #6366f1;
+}
+
+@media (prefers-color-scheme: dark){
+
+body{background:#111827;color:white}
+
+.container{background:#1f2937}
+
+.metric{background:#374151}
+
+.day{background:#374151}
+
 }
 
 </style>
@@ -231,75 +166,68 @@ border:2px solid #6366f1;
 
 <div class="container">
 
-<div class="topBar">
-<div class="title">WFO Tracker</div>
-<div class="export" onclick="exportCSV()" title="Download attendance data as CSV">⬇ Export</div>
-</div>
+<div class="title">🏢 WFO Tracker</div>
 
 <div class="header">
-<div class="nav" onclick="changeMonth(-1)">◀</div>
+<div onclick="changeMonth(-1)">◀</div>
 <div id="monthTitle"></div>
-<div class="nav" onclick="changeMonth(1)">▶</div>
+<div onclick="changeMonth(1)">▶</div>
 </div>
 
 <div class="metrics">
 
-<div class="metric work" title="Total working days in the month excluding weekends">
-📅 <span id="work"></span> Working Days
+<div class="metric">
+<span id="work"></span>
+Working Days
 </div>
 
-<div class="metric leave" title="Days marked as leave or public holiday">
-🌴 <span id="leave"></span> Leave/Holiday
+<div class="metric">
+<span id="leave"></span>
+Leave/Holiday
 </div>
 
-<div class="metric eff" title="Effective working days = working days minus leave days">
-⚙️ <span id="eff"></span> Effective
+<div class="metric">
+<span id="eff"></span>
+Effective Days
 </div>
 
-<div class="metric req" title="Required Work From Office days based on 60% rule">
-🎯 <span id="req"></span> Required
+<div class="metric">
+<span id="req"></span>
+Required WFO
 </div>
 
 </div>
 
 <div class="progressWrap">
 
-<div class="big" id="done"></div>
+<div id="done"></div>
 
 <div class="progress">
 <div class="bar" id="bar"></div>
 </div>
 
-<div class="infoRow">
-<span>Need <b id="remain"></b></span>
-<span>Left <b id="daysLeft"></b></span>
-<span>Pace <b id="pace"></b></span>
-<span id="status" class="status"></span>
+<div class="info">
+Need <b id="remain"></b> more • Working Days Left <b id="daysLeft"></b>
 </div>
+
+<div class="info">
+Compliance: <b id="percent"></b>%
+</div>
+
+<div id="status"></div>
 
 </div>
 
-<div class="selectedInfo" id="selectedInfo">
-Tap weekday to edit
+<div class="legend">
+🟢 WFO &nbsp;&nbsp; 🟡 Leave &nbsp;&nbsp; 🔴 Weekend
 </div>
 
 <div class="actions">
 
-<button class="today" onclick="markToday()" title="Mark today's attendance as Work From Office">
-✓ Today
-</button>
-
-<button class="wfo" onclick="mark('wfo')" title="Mark the selected date as Work From Office">
-🏢 WFO
-</button>
-
-<button class="leaveBtn" onclick="mark('leave')" title="Mark the selected date as Leave or Holiday">
-🌴 Leave
-</button>
-
-<button class="clear" onclick="clearDay()" title="Remove any marking from the selected date">
-✖ Clear
-</button>
+<button class="today" onclick="markToday()">✓ WFO Today</button>
+<button class="wfo" onclick="mark('wfo')">🏢 Mark WFO</button>
+<button class="leaveBtn" onclick="mark('leave')">🌴 Mark Leave</button>
+<button class="clear" onclick="clearDay()">✖ Clear</button>
 
 </div>
 
@@ -309,34 +237,27 @@ Tap weekday to edit
 
 <script>
 
-const STORAGE_KEY = "wfoTrackerData";
+const STORAGE_KEY="wfoTrackerData";
 
-let data;
-
-try {
-  data = JSON.parse(localStorage.getItem(STORAGE_KEY));
-} catch {
-  data = null;
-}
-
-if (!data) {
-  data = {};
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-}
+let data=JSON.parse(localStorage.getItem(STORAGE_KEY))||{};
 let selected=null;
 let current=new Date();
 
 function key(d){return d.toISOString().split("T")[0];}
 
 function workingDays(y,m){
+
 let total=new Date(y,m+1,0).getDate();
 let c=0;
+
 for(let i=1;i<=total;i++){
 let d=new Date(y,m,i);
 let day=d.getDay();
 if(day!==0 && day!==6)c++;
 }
+
 return c;
+
 }
 
 function buildCalendar(){
@@ -368,8 +289,8 @@ for(let i=1;i<=total;i++){
 
 let date=new Date(y,m,i);
 let full=key(date);
-let div=document.createElement("div");
 
+let div=document.createElement("div");
 div.className="day";
 div.innerText=i;
 
@@ -385,13 +306,11 @@ if(full===todayKey)div.classList.add("todayBorder");
 div.onclick=()=>{
 if(day===0||day===6)return;
 selected=full;
-document.querySelectorAll(".day").forEach(d=>d.classList.remove("selected"));
-div.classList.add("selected");
-document.getElementById("selectedInfo").innerText=new Date(full).toDateString();
 };
 
 cal.appendChild(div);
 }
+
 }
 
 function calculate(){
@@ -400,6 +319,7 @@ let y=current.getFullYear();
 let m=current.getMonth();
 
 let work=workingDays(y,m);
+
 let leave=0;
 let wfo=0;
 
@@ -420,14 +340,17 @@ document.getElementById("leave").innerText=leave;
 document.getElementById("eff").innerText=eff;
 document.getElementById("req").innerText=req;
 
-document.getElementById("done").innerText=wfo+" WFO";
+document.getElementById("done").innerText=wfo+" / "+req+" WFO";
+
 document.getElementById("remain").innerText=remain;
 
 let prog=(wfo/req)*100;
+
 document.getElementById("bar").style.width=prog+"%";
 
 let today=new Date();
 let end=new Date(y,m+1,0);
+
 let daysLeft=0;
 
 for(let d=new Date(today);d<=end;d.setDate(d.getDate()+1)){
@@ -437,19 +360,17 @@ if(day!==0 && day!==6)daysLeft++;
 
 document.getElementById("daysLeft").innerText=daysLeft;
 
-let pace="-";
-if(remain===0) pace="✓";
-else if(daysLeft>0) pace=(remain/(daysLeft/5)).toFixed(1);
-else pace="∞";
+let percent=Math.round((wfo/work)*100);
 
-document.getElementById("pace").innerText=pace;
+document.getElementById("percent").innerText=percent;
 
 let status="";
-if(remain>daysLeft)status="<span class='bad'>🔴 Risk</span>";
-else if(remain>daysLeft/2)status="<span class='warn'>🟡 Behind</span>";
-else status="<span class='good'>🟢 OK</span>";
 
-document.getElementById("status").innerHTML=status;
+if(remain>daysLeft)status="🔴 At Risk";
+else if(remain>daysLeft/2)status="🟡 Behind";
+else status="🟢 On Track";
+
+document.getElementById("status").innerText=status;
 
 }
 
@@ -469,13 +390,17 @@ save();
 
 function clearDay(){
 if(!selected)return;
+
+if(confirm("Clear selected day?")){
 delete data[selected];
 save();
 }
 
+}
+
 function save(){
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  render();
+localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
+render();
 }
 
 function changeMonth(s){
@@ -484,38 +409,14 @@ render();
 }
 
 function render(){
+
 document.getElementById("monthTitle").innerText=
 current.toLocaleString("default",{month:"long",year:"numeric"});
+
 buildCalendar();
 calculate();
+
 }
-
-function exportCSV(){
-let rows=["Date,Type"];
-Object.keys(data).forEach(d=>rows.push(d+","+data[d]));
-let blob=new Blob([rows.join("\n")],{type:"text/csv"});
-let url=URL.createObjectURL(blob);
-let a=document.createElement("a");
-a.href=url;
-a.download="wfo-data.csv";
-a.click();
-}
-
-/* Swipe month navigation */
-
-let startX=null;
-
-document.addEventListener("touchstart",e=>{
-startX=e.touches[0].clientX;
-});
-
-document.addEventListener("touchend",e=>{
-if(startX===null)return;
-let diff=e.changedTouches[0].clientX-startX;
-if(diff>60)changeMonth(-1);
-if(diff<-60)changeMonth(1);
-startX=null;
-});
 
 render();
 
