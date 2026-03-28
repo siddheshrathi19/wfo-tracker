@@ -6,14 +6,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-
 body{
 font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
 background:linear-gradient(135deg,#eef2ff,#f8fafc);
 margin:0;
 padding:16px;
 }
-
 .container{
 max-width:420px;
 margin:auto;
@@ -22,161 +20,42 @@ border-radius:16px;
 padding:16px;
 box-shadow:0 10px 30px rgba(0,0,0,0.1);
 }
-
-.title{
-font-size:22px;
-font-weight:700;
-text-align:center;
-margin-bottom:12px;
-}
-
-.header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:12px;
-font-weight:600;
-}
-
-.header div{
-cursor:pointer;
-padding:6px 10px;
-border-radius:8px;
-}
-
-.metrics{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
-margin-bottom:16px;
-}
-
-.metric{
-border-radius:12px;
-padding:12px;
-text-align:center;
-color:white;
-}
-
-.metric span{
-font-size:20px;
-font-weight:700;
-display:block;
-}
-
+.title{font-size:22px;font-weight:700;text-align:center;margin-bottom:12px;}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-weight:600;}
+.header div{cursor:pointer;padding:6px 10px;border-radius:8px;}
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.metric{border-radius:12px;padding:12px;text-align:center;color:white;}
+.metric span{font-size:20px;font-weight:700;display:block;}
 .work{background:#6366f1;}
 .leave{background:#f59e0b;}
 .eff{background:#6b7280;}
 .req{background:#16a34a;}
-
-.progressWrap{
-text-align:center;
-margin-bottom:16px;
-}
-
-.progress{
-height:10px;
-background:#e5e7eb;
-border-radius:10px;
-overflow:hidden;
-margin:8px 0;
-}
-
-.bar{
-height:10px;
-background:#16a34a;
-width:0%;
-transition:width .5s;
-}
-
-.info{
-font-size:13px;
-color:#475569;
-}
-
-.status{
-font-weight:600;
-margin-top:4px;
-}
-
-.actions{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:8px;
-margin-bottom:14px;
-}
-
-button{
-border:none;
-padding:10px;
-border-radius:10px;
-font-size:13px;
-cursor:pointer;
-color:white;
-transition:.2s;
-}
-
-button:active{
-transform:scale(0.95);
-}
-
+.progressWrap{text-align:center;margin-bottom:16px;}
+.progress{height:10px;background:#e5e7eb;border-radius:10px;overflow:hidden;margin:8px 0;}
+.bar{height:10px;background:#16a34a;width:0%;transition:width .5s;}
+.info{font-size:13px;color:#475569;}
+.status{font-weight:600;margin-top:4px;}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+button{border:none;padding:10px;border-radius:10px;font-size:13px;cursor:pointer;color:white;}
+button:active{transform:scale(0.95);}
 .today{background:#6366f1;}
 .wfo{background:#16a34a;}
 .leaveBtn{background:#f59e0b;}
 .clear{background:#ef4444;}
-
-.calendar{
-display:grid;
-grid-template-columns:repeat(7,1fr);
-gap:6px;
-font-size:12px;
-}
-
-.dayHead{
-text-align:center;
-font-weight:600;
-color:#64748b;
-}
-
-.day{
-height:34px;
-display:flex;
-align-items:center;
-justify-content:center;
-border-radius:8px;
-background:#f1f5f9;
-cursor:pointer;
-transition:.2s;
-}
-
-.day:hover{
-transform:scale(1.05);
-}
-
-.selected{
-outline:2px solid #2563eb;
-background:#dbeafe;
-}
-
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;font-size:12px;}
+.dayHead{text-align:center;font-weight:600;color:#64748b;}
+.day{height:34px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:#f1f5f9;cursor:pointer;}
+.selected{outline:2px solid #2563eb;background:#dbeafe;}
 .wfoDay{background:#16a34a;color:white;}
 .leaveDay{background:#f59e0b;color:white;}
-
-.weekend{
-background:#fee2e2;
-color:#b91c1c;
-}
-
-.todayBorder{
-border:2px solid #6366f1;
-}
-
+.weekend{background:#fee2e2;color:#b91c1c;}
+.todayBorder{border:2px solid #6366f1;}
 </style>
 </head>
 
 <body>
 
 <div class="container">
-
 <div class="title">🏢 WFO Tracker</div>
 
 <div class="header">
@@ -193,7 +72,6 @@ border:2px solid #6366f1;
 </div>
 
 <div class="progressWrap">
-
 <div id="done"></div>
 
 <div class="progress">
@@ -209,7 +87,6 @@ Progress: <b id="progressPercent"></b>% of target
 </div>
 
 <div id="status" class="status"></div>
-
 </div>
 
 <div class="actions">
@@ -220,7 +97,6 @@ Progress: <b id="progressPercent"></b>% of target
 </div>
 
 <div class="calendar" id="calendar"></div>
-
 </div>
 
 <script>
@@ -230,7 +106,18 @@ let data=JSON.parse(localStorage.getItem(STORAGE_KEY))||{};
 let selected=null;
 let current=new Date();
 
-function key(d){return d.toISOString().split("T")[0];}
+/* ✅ FIX 1: LOCAL DATE (NO UTC BUG) */
+function key(d){
+  return d.getFullYear() + '-' +
+    String(d.getMonth()+1).padStart(2,'0') + '-' +
+    String(d.getDate()).padStart(2,'0');
+}
+
+/* ✅ FIX 2: SAFE PARSE (NO TIMEZONE SHIFT) */
+function parseDate(str){
+  let p=str.split("-");
+  return new Date(p[0],p[1]-1,p[2]);
+}
 
 function workingDays(y,m){
 let total=new Date(y,m+1,0).getDate();
@@ -288,14 +175,12 @@ div.onclick=()=>{
 if(day===0||day===6)return;
 
 selected=full;
-
 document.querySelectorAll(".day").forEach(d=>d.classList.remove("selected"));
 div.classList.add("selected");
 };
 
 cal.appendChild(div);
 }
-
 }
 
 function calculate(){
@@ -309,7 +194,7 @@ let leave=0;
 let wfo=0;
 
 Object.keys(data).forEach(d=>{
-let dt=new Date(d);
+let dt=parseDate(d);
 if(dt.getFullYear()==y && dt.getMonth()==m){
 if(data[d]=="leave")leave++;
 if(data[d]=="wfo")wfo++;
@@ -325,11 +210,12 @@ document.getElementById("leave").innerText=leave;
 document.getElementById("eff").innerText=eff;
 document.getElementById("req").innerText=req;
 
-document.getElementById("done").innerText=wfo+" / "+req+" WFO";
+document.getElementById("done").innerText=`${wfo} / ${req} WFO`;
 
 document.getElementById("remain").innerText=remain;
 
-document.getElementById("bar").style.width=(wfo/req*100)+"%";
+let percent = req === 0 ? 0 : (wfo/req*100);
+document.getElementById("bar").style.width=percent+"%";
 
 let today=new Date();
 let daysLeft;
@@ -350,13 +236,14 @@ document.getElementById("daysLeft").innerText=daysLeft;
 let progress = req === 0 ? 0 : Math.round((wfo / req) * 100);
 document.getElementById("progressPercent").innerText = progress;
 
+/* ✅ IMPROVED STATUS */
 let status="";
-if(remain>daysLeft)status="🔴 At Risk";
+if(remain===0) status="🎉 Target Achieved!";
+else if(remain>daysLeft)status="🔴 At Risk";
 else if(remain>daysLeft/2)status="🟡 Behind";
 else status="🟢 On Track";
 
 document.getElementById("status").innerText=status;
-
 }
 
 function mark(type){
@@ -368,7 +255,7 @@ save();
 function markToday(){
 let today=new Date();
 if(today.getDay()===0||today.getDay()===6){alert("Weekend");return;}
-data[key(today)]="wfo";
+data[key(today)]="wfo"; // ✅ FIXED
 save();
 }
 
