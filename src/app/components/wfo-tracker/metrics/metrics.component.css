@@ -1,0 +1,119 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.nav-btn {
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.nav-btn:hover {
+  background-color: #f1f5f9;
+}
+
+.month-title {
+  font-size: 16px;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.metric {
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+  color: white;
+}
+
+.metric .value {
+  font-size: 20px;
+  font-weight: 700;
+  display: block;
+}
+
+.metric .label {
+  font-size: 11px;
+  opacity: 0.9;
+}
+
+.work { background: #6366f1; }
+.leave { background: #f59e0b; }
+.effective { background: #6b7280; }
+.required { background: #16a34a; }
+
+.progress-wrap {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.done {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.progress {
+  height: 10px;
+  background: #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+.bar {
+  height: 10px;
+  background: #16a34a;
+  width: 0%;
+  transition: width 0.5s ease;
+}
+
+.info {
+  font-size: 13px;
+  color: #475569;
+  margin-top: 4px;
+}
+
+.status {
+  font-weight: 600;
+  margin-top: 8px;
+  color: #1e293b;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.btn {
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  cursor: pointer;
+  color: white;
+  transition: transform 0.1s, opacity 0.2s;
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.today { background: #6366f1; }
+.wfo { background: #16a34a; }
+.leave { background: #f59e0b; }
+.clear { background: #ef4444; }

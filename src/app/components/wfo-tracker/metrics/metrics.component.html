@@ -1,0 +1,49 @@
+<div class="header">
+  <div class="nav-btn" (click)="wfoService.changeMonth(-1)">◀</div>
+  <div class="month-title">{{ wfoService.monthTitle() }}</div>
+  <div class="nav-btn" (click)="wfoService.changeMonth(1)">▶</div>
+</div>
+
+<div class="metrics">
+  <div class="metric work">
+    <span class="value">{{ wfoService.metrics().workDays }}</span>
+    <span class="label">Working Days</span>
+  </div>
+  <div class="metric leave">
+    <span class="value">{{ wfoService.metrics().leaveDays }}</span>
+    <span class="label">Leave/Holiday</span>
+  </div>
+  <div class="metric effective">
+    <span class="value">{{ wfoService.metrics().effectiveDays }}</span>
+    <span class="label">Effective</span>
+  </div>
+  <div class="metric required">
+    <span class="value">{{ wfoService.metrics().requiredDays }}</span>
+    <span class="label">Required</span>
+  </div>
+</div>
+
+<div class="progress-wrap">
+  <div class="done">{{ wfoService.metrics().effectiveDays }} of {{ wfoService.metrics().requiredDays }} days</div>
+  
+  <div class="progress">
+    <div class="bar" [style.width.%]="wfoService.metrics().progressPercent"></div>
+  </div>
+  
+  <div class="info">
+    Need <b>{{ wfoService.metrics().remainingDays }}</b> • Working Days Left <b>{{ wfoService.metrics().daysLeftInMonth }}</b>
+  </div>
+  
+  <div class="info">
+    Progress: <b>{{ wfoService.metrics().progressPercent }}%</b> of target
+  </div>
+  
+  <div class="status">{{ wfoService.statusMessage() }}</div>
+</div>
+
+<div class="actions">
+  <button class="btn today" (click)="wfoService.markToday()">✓ Today</button>
+  <button class="btn wfo" (click)="markSelectedDay('wfo')">🏢 WFO</button>
+  <button class="btn leave" (click)="markSelectedDay('leave')">🌴 Leave</button>
+  <button class="btn clear" (click)="clearSelectedDay()">✖ Clear</button>
+</div>
