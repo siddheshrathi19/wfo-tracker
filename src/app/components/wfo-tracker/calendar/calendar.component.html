@@ -1,17 +1,19 @@
-<div class="calendar">
-  <div class="day-header" *ngFor="let day of weekDays">{{ day }}</div>
-  
-  <div 
-    *ngFor="let day of wfoService.calendarDays(); trackBy: trackByDateKey"
-    class="day"
-    [class.selected]="wfoService.selectedDay() === day.dateKey"
-    [class.wfo-day]="day.status === 'wfo'"
-    [class.leave-day]="day.status === 'leave'"
-    [class.weekend]="day.isWeekend && !day.status"
-    [class.today]="day.isToday"
-    [class.other-month]="!day.isCurrentMonth"
-    (click)="selectDay(day)"
-  >
-    {{ day.day }}
+<div class="calendar-wrapper">
+  <div class="calendar">
+    <div class="day-header" *ngFor="let day of weekDays">{{ day }}</div>
+    
+    <div 
+      *ngFor="let day of wfoService.calendarDays(); trackBy: trackByDateKey"
+      class="day"
+      [class.selected]="wfoService.selectedDay() === day.dateKey"
+      [class.wfo-day]="day.status === 'wfo'"
+      [class.leave-day]="day.status === 'leave'"
+      [class.weekend]="day.isWeekend && !day.status"
+      [class.today]="day.isToday"
+      [class.other-month]="!day.isCurrentMonth"
+      (click)="selectDay(day)"
+    >
+      {{ day.day }}
+    </div>
   </div>
 </div>

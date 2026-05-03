@@ -42,9 +42,6 @@ export class WfoService {
 
     const daysInMonth = this.getDaysInMonth(year, month);
     const today = new Date();
-    const currentDay = today.getFullYear() === year && today.getMonth() === month 
-      ? today.getDate() 
-      : daysInMonth;
 
     let workDays = 0;
     let leaveDays = 0;
@@ -232,7 +229,18 @@ export class WfoService {
   markToday(): void {
     const today = new Date();
     const dateKey = this.getDateKey(today.getFullYear(), today.getMonth(), today.getDate());
+    this._currentYear.set(today.getFullYear());
+    this._currentMonth.set(today.getMonth());
     this.selectedDay.set(dateKey);
+  }
+
+  navigateToDate(dateKey: string): void {
+    const [year, month] = dateKey.split('-').map(Number);
+    if (!Number.isFinite(year) || !Number.isFinite(month)) {
+      return;
+    }
+    this._currentYear.set(year);
+    this._currentMonth.set(month - 1);
   }
 
   clearDay(dateKey: string): void {

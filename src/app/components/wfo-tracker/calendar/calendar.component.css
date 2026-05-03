@@ -1,7 +1,16 @@
+.calendar-wrapper {
+  overflow-x: auto;
+  width: 100%;
+  margin-bottom: 12px;
+  padding-bottom: 4px;
+}
+
 .calendar {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, minmax(36px, 1fr));
   gap: 6px;
+  width: 100%;
+  min-width: 252px;
   font-size: 12px;
 }
 
@@ -9,18 +18,22 @@
   text-align: center;
   font-weight: 600;
   color: #64748b;
-  padding: 4px;
+  padding: 6px 4px;
+  font-size: 11px;
 }
 
 .day {
-  height: 34px;
+  min-height: 42px;
+  aspect-ratio: 1 / 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
+  border-radius: 10px;
   background: #f1f5f9;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background 0.2s, transform 0.2s;
+  font-size: 13px;
+  min-width: 0;
 }
 
 .day:hover {
@@ -53,4 +66,20 @@
 
 .other-month {
   opacity: 0.4;
+}
+
+@media (max-width: 600px) {
+  .calendar {
+    gap: 4px;
+  }
+
+  .day-header {
+    padding: 4px 2px;
+    font-size: 10px;
+  }
+
+  .day {
+    min-height: 36px;
+    font-size: 12px;
+  }
 }

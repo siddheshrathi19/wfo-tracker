@@ -5,7 +5,11 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development"
+    "watch": "ng build --watch --configuration development",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test:e2e": "cypress run",
+    "test:e2e:headed": "cypress open"
   },
   "private": true,
   "dependencies": {
@@ -25,6 +29,7 @@
     "@angular-devkit/build-angular": "^21.2.8",
     "@angular/cli": "^21.2.8",
     "@angular/compiler-cli": "^21.2.8",
+    "cypress": "^4.2.0",
     "typescript": "~5.9.0"
   }
 }

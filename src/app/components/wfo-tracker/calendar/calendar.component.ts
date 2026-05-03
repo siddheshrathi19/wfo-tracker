@@ -24,6 +24,9 @@ export class CalendarComponent {
   readonly weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
   selectDay(day: CalendarDay): void {
+    if (!day.isCurrentMonth) {
+      this.wfoService.navigateToDate(day.dateKey);
+    }
     this.wfoService.selectDay(day.dateKey);
   }
 

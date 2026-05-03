@@ -12,8 +12,23 @@ import { WfoTrackerComponent } from './components/wfo-tracker/wfo-tracker.compon
   `,
   styles: [`
     .app-container {
-      max-width: 420px;
-      margin: 0 auto;
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    @media (min-width: 768px) {
+      .app-container {
+        padding: 16px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .app-container {
+        padding: 24px;
+      }
     }
   `]
 })

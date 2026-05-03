@@ -5,9 +5,36 @@
   padding: 0;
 }
 
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background: linear-gradient(135deg, #eef2ff, #f8fafc);
   min-height: 100vh;
-  padding: 16px;
+  line-height: 1.5;
+}
+
+/* Mobile: no scroll, full screen */
+@media (max-width: 767px) {
+  body {
+    padding: 8px;
+    overflow-x: hidden;
+  }
+}
+
+/* Tablet and Desktop: allow scroll */
+@media (min-width: 768px) {
+  body {
+    padding: 20px;
+    overflow: auto;
+  }
+}
+
+/* Focus visible for accessibility */
+:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
 }

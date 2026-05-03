@@ -105,6 +105,17 @@
   transition: transform 0.1s, opacity 0.2s;
 }
 
+@media (max-width: 620px) {
+  .metrics,
+  .actions {
+    grid-template-columns: 1fr;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+
 .btn:active {
   transform: scale(0.95);
 }
